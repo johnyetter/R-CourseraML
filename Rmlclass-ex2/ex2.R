@@ -63,8 +63,14 @@ cat(paste(grad))
 
 readline(prompt="\nProgram paused. Press enter to continue.\n")
 
-# ============= Part 3: Optimizing using otim  =============
+# ============= Part 3: Optimizing using optim  =============
 #  In this part, we use a built-in function (optim) to find the
 #  optimal parameters theta.
 
+optim.result <- optim(initial_theta, costFunctionNoGrad, NULL, X, y, method = "BFGS",
+             control = list(maxit = 400))
+print(optim.result)
 
+cat(paste('Cost at theta found by R optim: ', optim.result$value, '\n'))
+cat(paste('theta (zeros): \n'))
+cat(paste(optim.result$par))

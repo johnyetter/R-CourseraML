@@ -41,3 +41,20 @@ costFunction <- function(theta, X, y){
   retlist = list(J,grad)
   return(retlist)
 }
+
+costFunctionNoGrad <- function(theta, X, y){
+  # Initialize some useful values
+  m = length(y) # number of training examples
+  
+  # You need to return the following variables correctly 
+  J = 0
+
+  source('sigmoid.R')
+  
+  h = sigmoid(X%*%theta)
+  log_h = log(h)
+  log_1minush = log(1 - h)
+  costs = -y * log_h - (1 - y) * log_1minush
+  
+  J = (1/m)*sum(costs)
+}
