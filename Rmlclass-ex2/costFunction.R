@@ -42,6 +42,9 @@ costFunction <- function(theta, X, y){
   return(retlist)
 }
 
+# costFunctionNoGrad returns only the cost, not the grad value.
+# This is necessary, because the R optim function expects a simple
+# numeric return value.
 costFunctionNoGrad <- function(theta, X, y){
   # Initialize some useful values
   m = length(y) # number of training examples

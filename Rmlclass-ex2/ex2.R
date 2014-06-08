@@ -34,6 +34,9 @@ cat(paste("Plotting data with + indicating (y = 1) examples and o indicating",
 
 source('plotData.R') # Load our plot function
 plotData(X, y)
+legend('topright', c("Admitted","Not admitted"), col=c("black","black"), 
+       pch=c(3,21), pt.cex=c(1,1.5), pt.bg=c("BLACK", "YELLOW"),pt.lwd=2,
+       bty = "n")
 
 readline(prompt="\nProgram paused. Press enter to continue.\n")
 
@@ -66,11 +69,47 @@ readline(prompt="\nProgram paused. Press enter to continue.\n")
 # ============= Part 3: Optimizing using optim  =============
 #  In this part, we use a built-in function (optim) to find the
 #  optimal parameters theta.
-
+#
+#  We use costFunctionNoGrad, which returns only the cost (not the grad
+#  value), because the R optim command expects a simple numeric return value.
+library("stats")
 optim.result <- optim(initial_theta, costFunctionNoGrad, NULL, X, y, method = "BFGS",
              control = list(maxit = 400))
-print(optim.result)
-
+theta = optim.result$par
 cat(paste('Cost at theta found by R optim: ', optim.result$value, '\n'))
 cat(paste('theta (zeros): \n'))
-cat(paste(optim.result$par))
+cat(paste(theta))
+
+source('plotDecisionBoundary.R')
+plotDecisionBoundary(theta, X, y)
+legend('topright', c("Admitted","Not admitted","Decision Boundary"), 
+       col=c("black","black","blue"), pch=c(3,21,NA), pt.cex=c(1,1.5,1), 
+       pt.bg=c("BLACK", "YELLOW", NA),pt.lwd=2,lwd=c(NA,NA,2),bty = "n")
+
+readline(prompt="\nProgram paused. Press enter to continue.\n")
+
+# ============== Part 4: Predict and Accuracies ==============
+#  After learning the parameters, you'll like to use it to predict the outcomes
+#  on unseen data. In this part, you will use the logistic regression model
+#  to predict the probability that a student with score 45 on exam 1 and 
+#  score 85 on exam 2 will be admitted.
+#
+#  Furthermore, you will compute the training and test set accuracies of 
+#  our model.
+#
+#  Your task is to complete the code in predict.m
+
+#  Predict probability for a student with score 45 on exam 1 
+#  and score 85 on exam 2 
+
+prob = sigmoid(c(1, 45, 85) %*% theta)
+cat(paste('For a student with scores 45 and 85, we predict an admission probability of ', 
+          prob, '\n'))
+
+# Compute accuracy on our training set
+source('predict.R')
+p = predict(theta, X)
+
+cat(paste('Train Accuracy: ', mean(as.numeric(p == y)) * 100, '\n'))
+
+readline(prompt="\nProgram paused. Press enter to continue.\n")

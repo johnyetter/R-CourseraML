@@ -32,9 +32,4 @@ plot(X[pos, 1], X[pos, 2], pch = 3, lwd = 2, ylim=c(30, 100),
 
 # Now add negative (not admitted) cases
 points(X[neg, 1], X[neg, 2], pch = 21, lwd=2, cex = 1.5, bg="YELLOW")
-
-# Add the legend
-legend('topright', c("Admitted","Not admitted"), col=c("black","black"), 
-       pch=c(3,21), pt.cex=c(1,1.5), pt.bg=c("BLACK", "YELLOW"),pt.lwd=2,
-       bty = "n")
 }
