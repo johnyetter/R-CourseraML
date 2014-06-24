@@ -100,6 +100,7 @@ cat(paste('Train Accuracy: ', mean(as.double(p == y)), '\n'))
 
 readline(prompt="\nProgram paused. Press enter to continue.\n")
 
+# Repeat for lambda = 0
 # Initialize fitting parameters
 initial_theta = matrix(rep(0, ncol(X)))
 # Set regularization parameter lambda to 1
@@ -122,6 +123,7 @@ legend('topright', c("y = 1","y = 0","Decision Boundary"),
 
 readline(prompt="\nProgram paused. Press enter to continue.\n")
 
+# Repeat for lambda = 100
 # Initialize fitting parameters
 initial_theta = matrix(rep(0, ncol(X)))
 # Set regularization parameter lambda to 1
