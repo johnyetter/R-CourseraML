@@ -7,11 +7,11 @@
 #      intercept.
 #   2) MxN, N>3 matrix, where the first column is all-ones
 
-plotDecisionBoundary <- function(theta, X, y){
+plotDecisionBoundary <- function(theta, X, y, lim = NULL){
 
   # Plot Data
   source('plotData.R')
-  plotData(X[,2:3], y);
+  plotData(X[,2:3], y, lim);
 
   if (ncol(X) <= 3){
     # Only need 2 points to define a line, so choose two endpoints
@@ -27,20 +27,21 @@ plotDecisionBoundary <- function(theta, X, y){
   }
   else{
     #Here is the grid range
-#    u = linspace(-1, 1.5, 50);
-#    v = linspace(-1, 1.5, 50);
-    
-#    z = zeros(length(u), length(v));
+    u = seq(-1,1.5,length=50)
+    v = seq(-1,1.5,length=50)
+    z = matrix(0, nrow=length(u), ncol=length(v))
     # Evaluate z = theta*x over the grid
-#    for i = 1:length(u)
-#      for j = 1:length(v)
-#        z(i,j) = mapFeature(u(i), v(j))*theta;
-#      end
-#    end
-#    z = t(z) # important to transpose z before calling contour
-    
-        # Plot z = 0
-        # Notice you need to specify the range [0, 0]
-#        contour(u, v, z, [0, 0], 'LineWidth', 2)
+    for (i in 1:length(u)){
+      for (j in 1:length(v)){
+        z[i,j] = mapFeature(u[i], v[j])%*%theta;
+      }
+    }
+    z = t(z) # important to transpose z before calling contour
+   
+    # Plot z = 0
+    # Notice you need to specify the range [0, 0]
+    contour(u, v, z, drawlabels=FALSE, nlevels=1, col="black", lwd=3, add=TRUE)
+    #contour(u, v, z, method = "edge")
+    #contour(u, v, z)
   }
 }

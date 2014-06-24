@@ -33,7 +33,10 @@ cat(paste("Plotting data with + indicating (y = 1) examples and o indicating",
 "(y = 0) examples.\n"))
 
 source('plotData.R') # Load our plot function
-plotData(X, y)
+#plotData(X, y, "Exam 1 score", "Exam 2 score", lim = c(30, 100))
+plotData(X, y, lim = c(30, 100))
+
+title(xlab="Exam 1 score", ylab="Exam 2 score")
 legend('topright', c("Admitted","Not admitted"), col=c("black","black"), 
        pch=c(3,21), pt.cex=c(1,1.5), pt.bg=c("BLACK", "YELLOW"),pt.lwd=2,
        bty = "n")
@@ -56,9 +59,8 @@ initial_theta = as.matrix(rep(0, n+1))
 
 # Compute and display initial cost and gradient
 source('costFunction.R')
-costResult = costFunction(initial_theta, X, y)
-cost = costResult[[1]]
-grad = as.matrix(costResult[[2]])
+cost = costFunction(initial_theta, X, y)
+grad = gradientFunction(initial_theta, X, y)
 
 cat(paste('Cost at initial theta (zeros): ', cost, '\n'))
 cat(paste('Gradient at initial theta (zeros): \n'))
@@ -72,16 +74,20 @@ readline(prompt="\nProgram paused. Press enter to continue.\n")
 #
 #  We use costFunctionNoGrad, which returns only the cost (not the grad
 #  value), because the R optim command expects a simple numeric return value.
+
+# TODO: Add a gradient function
+
 library("stats")
-optim.result <- optim(initial_theta, costFunctionNoGrad, NULL, X, y, method = "BFGS",
-             control = list(maxit = 400))
+optim.result <- optim(initial_theta, fn = costFunction, gr = function(...) gradientFunction(...), 
+                      X = X, y = y, method = "BFGS", control = list(maxit = 400))
 theta = optim.result$par
 cat(paste('Cost at theta found by R optim: ', optim.result$value, '\n'))
 cat(paste('theta (zeros): \n'))
 cat(paste(theta))
 
 source('plotDecisionBoundary.R')
-plotDecisionBoundary(theta, X, y)
+plotDecisionBoundary(theta, X, y, c(30, 100))
+title(xlab="Exam 1 score", ylab="Exam 2 score")
 legend('topright', c("Admitted","Not admitted","Decision Boundary"), 
        col=c("black","black","blue"), pch=c(3,21,NA), pt.cex=c(1,1.5,1), 
        pt.bg=c("BLACK", "YELLOW", NA),pt.lwd=2,lwd=c(NA,NA,2),bty = "n")

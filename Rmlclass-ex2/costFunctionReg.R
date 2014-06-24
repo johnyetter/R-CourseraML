@@ -18,28 +18,27 @@
 #  the Coursera course is a violation of the Coursera Honor Code, and is 
 #  explicitly against the wishes and intent of the author.
 
-costFunction <- function(theta, X, y){
+costFunctionReg <- function(theta, X, y, lambda){
   # Initialize some useful values
   m = length(y) # number of training examples
   J = 0
-
+  
   source('sigmoid.R')
-
   h = sigmoid(X%*%theta)
   log_h = log(h)
   log_1minush = log(1 - h)
   costs = -y * log_h - (1 - y) * log_1minush
-  
-  J = (1/m)*sum(costs)
+
+  J = (1/m)*sum(costs) + (lambda/(2*m))*t(theta[2:length(theta)])%*%theta[2:length(theta)]
 }
 
-gradientFunction <- function(theta, X, y){
+gradientFunctionReg <- function(theta, X, y, lambda){
   # Initialize some useful values
   m = length(y) # number of training examples
   grad = matrix(0,1,length(theta))
-   
-  source('sigmoid.R')  
+
+  source('sigmoid.R')
   h = sigmoid(X%*%theta)
-  
-  grad = (1/m) * (t(h - y) %*% X)
+  theta[1]=0
+  grad = (1/m) * (t(X)%*%(h - y)) + (lambda/m)*theta
 }

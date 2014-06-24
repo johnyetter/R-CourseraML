@@ -17,8 +17,9 @@
 #  the Coursera course is a violation of the Coursera Honor Code, and is 
 #  explicitly against the wishes and intent of the author.
 
-plotData <- function (X, y){
-
+#plotData <- function (X, y, xl = NULL, yl = NULL, lim = NULL){
+plotData <- function (X, y, lim = NULL){
+    
 pos = which(y==1) # Get the indices of the positive labels (admitted cases)
 neg = which(y==0) # Get the indices of the negative labels (not admitted cases)
 
@@ -27,8 +28,7 @@ windows()
 par(mar = c(4, 4, 1, 1), oma = c(1, 1, 1, 1)) # Set margins
 
 # Plot positive (admited) cases
-plot(X[pos, 1], X[pos, 2], pch = 3, lwd = 2, ylim=c(30, 100), 
-     xlab="Exam 1 score", ylab="Exam 2 score")
+plot(X[pos, 1], X[pos, 2], pch = 3, lwd = 2, xlim = lim, ylim=lim, xlab='',ylab='')
 
 # Now add negative (not admitted) cases
 points(X[neg, 1], X[neg, 2], pch = 21, lwd=2, cex = 1.5, bg="YELLOW")
