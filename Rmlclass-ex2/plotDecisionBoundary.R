@@ -38,10 +38,6 @@ plotDecisionBoundary <- function(theta, X, y, lim = NULL){
     }
     z = t(z) # important to transpose z before calling contour
    
-    # Plot z = 0
-    # Notice you need to specify the range [0, 0]
-    contour(u, v, z, drawlabels=FALSE, nlevels=1, col="black", lwd=3, add=TRUE)
-    #contour(u, v, z, method = "edge")
-    #contour(u, v, z)
+    contour(u, v, z, drawlabels=FALSE, nlevels=1, col="green", lwd=3, add=TRUE)
   }
 }

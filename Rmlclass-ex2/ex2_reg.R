@@ -88,8 +88,56 @@ cat(paste('Cost at theta found by R optim: ', optim.result$value, '\n'))
 
 source('plotDecisionBoundary.R')
 plotDecisionBoundary(theta, X, y, c(-1,1.5))
+title(xlab="Microchip Test 1", ylab="Microchip Test 2")
+legend('topright', c("y = 1","y = 0","Decision Boundary"), 
+       col=c("black","black","green"), pch=c(3,21,NA), pt.cex=c(1,1.5,1), 
+       pt.bg=c("BLACK", "YELLOW", NA),pt.lwd=2,lwd=c(NA,NA,2),bty = "n")
 
 source('predict.R')
 p = predict(theta, X)
 
 cat(paste('Train Accuracy: ', mean(as.double(p == y)), '\n'))
+
+readline(prompt="\nProgram paused. Press enter to continue.\n")
+
+# Initialize fitting parameters
+initial_theta = matrix(rep(0, ncol(X)))
+# Set regularization parameter lambda to 1
+lambda = 0;
+
+library("stats")
+optim.result <- optim(initial_theta, fn = costFunctionReg, 
+                      gr = function(...) gradientFunctionReg(...), 
+                      X = X, y = y, lambda = lambda, 
+                      method = "BFGS", control = list(maxit = 400))
+theta = optim.result$par
+cat(paste('Cost at theta found by R optim: ', optim.result$value, '\n'))
+
+source('plotDecisionBoundary.R')
+plotDecisionBoundary(theta, X, y, c(-1,1.5))
+title(xlab="Microchip Test 1", ylab="Microchip Test 2")
+legend('topright', c("y = 1","y = 0","Decision Boundary"), 
+       col=c("black","black","green"), pch=c(3,21,NA), pt.cex=c(1,1.5,1), 
+       pt.bg=c("BLACK", "YELLOW", NA),pt.lwd=2,lwd=c(NA,NA,2),bty = "n")
+
+readline(prompt="\nProgram paused. Press enter to continue.\n")
+
+# Initialize fitting parameters
+initial_theta = matrix(rep(0, ncol(X)))
+# Set regularization parameter lambda to 1
+lambda = 100;
+
+library("stats")
+optim.result <- optim(initial_theta, fn = costFunctionReg, 
+                      gr = function(...) gradientFunctionReg(...), 
+                      X = X, y = y, lambda = lambda, 
+                      method = "BFGS", control = list(maxit = 400))
+theta = optim.result$par
+cat(paste('Cost at theta found by R optim: ', optim.result$value, '\n'))
+
+source('plotDecisionBoundary.R')
+plotDecisionBoundary(theta, X, y, c(-1,1.5))
+title(xlab="Microchip Test 1", ylab="Microchip Test 2")
+legend('topright', c("y = 1","y = 0","Decision Boundary"), 
+       col=c("black","black","green"), pch=c(3,21,NA), pt.cex=c(1,1.5,1), 
+       pt.bg=c("BLACK", "YELLOW", NA),pt.lwd=2,lwd=c(NA,NA,2),bty = "n")
